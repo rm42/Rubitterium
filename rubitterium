@@ -1,0 +1,19 @@
+require 'twitter'
+require 'yaml'
+
+if ! ARGV[0]
+  puts "Error - Empty message. No tweet sent"
+  exit
+end
+
+config = YAML.load_file('config.yml')
+
+client = Twitter::REST::Client.new do |cliConfig|
+  cliConfig.consumer_key = config["consumerKey"]
+  cliConfig.consumer_secret = config["consumerSecret"]
+  cliConfig.access_token        = config["accessKey"]
+  cliConfig.access_token_secret = config["accessSecret"]
+end
+
+client.update(ARGV[0])
+
