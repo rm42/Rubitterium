@@ -6,6 +6,11 @@ if ! ARGV[0]
   exit
 end
 
+# [0..4]  0,1,2,3,4
+# [0...4] 0,1,2,3
+tweet=ARGV[0][0...140]
+puts tweet
+
 config = YAML.load_file('config.yml')
 
 client = Twitter::REST::Client.new do |cliConfig|
@@ -15,5 +20,5 @@ client = Twitter::REST::Client.new do |cliConfig|
   cliConfig.access_token_secret = config["accessSecret"]
 end
 
-client.update(ARGV[0])
+client.update(tweet)
 
